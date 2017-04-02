@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Compare and set test
+ *
+ * */
+
 public class CMSTest {
 
     //共享单变量原子操作
@@ -50,7 +55,7 @@ public class CMSTest {
         }
         System.out.println("CMSTest.age = "+cms.age.get());
         System.out.println("CMSTest.height = "+cms.height);
-        System.out.println("Person.height = "+cms.ari.get().getHeight()+" Person.age = "+cms.ari.get().getAge());
+        System.out.println("Person.height = "+cms.ari.get().height+" Person.age = "+cms.ari.get().age);
         System.out.println("time = "+Long.toString(System.currentTimeMillis()-start));
 
     }
@@ -68,7 +73,7 @@ public class CMSTest {
     public void ageHeightMultipleSafeIncrease(){
         for (;;){
             Person person = this.ari.get();
-            Person nextPerson = new Person(person.getAge()+1,person.getHeight()+1);
+            Person nextPerson = new Person(person.age+1,person.height+1);
             if(this.ari.compareAndSet(person,nextPerson)){
                 break;
             }
@@ -78,22 +83,6 @@ public class CMSTest {
     }
 
     private class Person {
-        public int getAge() {
-            return age;
-        }
-
-        public void setAge(int age) {
-            this.age = age;
-        }
-
-        public int getHeight() {
-            return height;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
-
         private int age = 0;
         private int height = 0;
 
@@ -119,7 +108,8 @@ public class CMSTest {
 
             }
             Person  person = (Person)obj;
-            if (person.getAge() == this.age && person.getHeight() == this.height){
+            //非静态方法间内部类的
+            if (person.age == this.age && person.age == this.height){
                 return true;
             }else{
                 return false;
