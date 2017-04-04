@@ -1,0 +1,5 @@
+<root>
+    <item name='java.util.concurrent.locks.AbstractOwnableSynchronizer void setExclusiveOwnerThread(java.lang.Thread)'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
